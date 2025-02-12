@@ -19,7 +19,7 @@ bun run run
 In order not to anger FEFU IT team, mock files should be used instead of fetch.
 Currently there are:
 
-- `src/mocking/events.json`: example of object, returned by `requestEvents` function. Can be disabled by setting `REQUEST_EVENTS` environment variable.
+- `src/api/mocking/events.json`: example of object, returned by `requestEvents` function. Can be disabled by setting `REQUEST_EVENTS` environment variable.
 
 To generate all mock data run
 

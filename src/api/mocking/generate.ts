@@ -1,4 +1,4 @@
-import { requestEvents } from "../api";
+import { requestEvents } from "@/api";
 process.env.REQUEST_EVENTS = "true";
 
 let start = new Date();
@@ -17,7 +17,7 @@ console.log(end);
 const events = await requestEvents(
   start,
   end,
-  6482 // random group id
+  6162 // random group id
 );
 
 Bun.write(`${import.meta.dir}/events.json`, JSON.stringify(events));

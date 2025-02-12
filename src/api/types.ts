@@ -1,3 +1,8 @@
+export interface DataRange {
+  start: Date;
+  end: Date;
+}
+
 export interface ApiEvent {
   id: number;
   guid: string;

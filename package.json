@@ -10,9 +10,9 @@
   },
   "type": "module",
   "scripts": {
-    "run": "./src/index.ts",
+    "run": "bun ./src/index.ts",
     "lint": "prettier . --check",
     "lint-fix": "prettier . --write",
-    "generate-mock": "./src/mocking/generate.ts"
+    "generate-mock": "bun ./src/api/mocking/generate.ts"
   }
 }
