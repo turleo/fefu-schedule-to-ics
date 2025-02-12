@@ -63,7 +63,7 @@ export async function requestEvents(
    */
   if (!process.env.REQUEST_EVENTS) {
     const answer = Bun.file(`${import.meta.dir}/mocking/events.json`);
-    return (await answer.json()) as ApiAnswer;
+    return (await answer.json()) as ApiEvent[];
   }
 
   const dates = datesIntoRanges(start, end);

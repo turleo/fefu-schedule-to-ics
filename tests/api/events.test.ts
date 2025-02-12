@@ -1,4 +1,4 @@
-import { test, describe, expect } from "bun:test";
+import { test, expect } from "bun:test";
 import { datesIntoRanges } from "@/api/events";
 
 test("generate data ranges", () => {
