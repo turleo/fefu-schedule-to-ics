@@ -1,5 +1,5 @@
 import { test, expect } from "bun:test";
-import { massApiEventToIcs } from "@/ics/converter";
+import { massApiEventToIcs } from "@/exports/ics/converter";
 import type { EventAttributes } from "ics";
 import apiEvents from "../apiEvents.json";
 
