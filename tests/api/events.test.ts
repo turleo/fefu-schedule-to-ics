@@ -1,5 +1,5 @@
+import { datesIntoRanges } from "@/api/dates";
 import { test, expect } from "bun:test";
-import { datesIntoRanges } from "@/api/events";
 
 test("generate data ranges", () => {
   const startDate = new Date(2025, 1, 12);
