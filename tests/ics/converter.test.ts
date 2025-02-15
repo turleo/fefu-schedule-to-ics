@@ -22,7 +22,7 @@ const expectedEvents: EventAttributes[] = [
     title: "Безумно полезный предмет",
     description: "Б9123-09.03.03пикд, Лекция\nСамый лучший преподователь",
     location: "D123",
-    uid: "1",
+    uid: "2",
   },
 ];
 

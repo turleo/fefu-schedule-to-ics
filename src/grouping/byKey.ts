@@ -1,11 +1,9 @@
-import type { ApiEvent } from "@/api/types";
-
-export function groupEvents<T extends keyof ApiEvent>(
-  events: ApiEvent[],
-  key: T,
-  values: ApiEvent[T][]
+export function groupEvents<T, K extends keyof T>(
+  events: T[],
+  key: K,
+  values: T[K][]
 ) {
-  const groups: Map<ApiEvent[T], ApiEvent[]> = new Map();
+  const groups: Map<T[K], T[]> = new Map();
 
   for (const value of values) {
     groups.set(value, []);
