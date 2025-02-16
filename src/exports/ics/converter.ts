@@ -1,5 +1,5 @@
 import type { ApiEvent } from "@/api/types";
-import { type DateTime, type EventAttributes } from "ics";
+import { createEvents, type DateTime, type EventAttributes } from "ics";
 
 function apiEventToIcs(event: ApiEvent) {
   const startDate = new Date(event.start);
@@ -27,17 +27,26 @@ function apiEventToIcs(event: ApiEvent) {
     duration,
     title: event.title,
     description: `${group}, ${type}\n${teacher}`,
-    location: event.classroom,
-    url: event.distanceEducationURL ?? undefined,
-    uid: event.id.toString(),
+    location: event.distanceEducationURL
+      ? event.distanceEducationURL
+      : event.classroom,
+    uid: event.guid,
   };
   return attributes;
 }
 
-export function massApiEventToIcs(apiEvents: ApiEvent[]) {
+export function massApiEventToIcsEvent(apiEvents: ApiEvent[]) {
   const icsEvents: EventAttributes[] = [];
   for (const apiEvent of apiEvents) {
     icsEvents.push(apiEventToIcs(apiEvent));
   }
   return icsEvents;
+}
+
+export function massApiEventToIcs(apiEvent: ApiEvent[]) {
+  const out = createEvents(massApiEventToIcsEvent(apiEvent));
+  if (out.error || !out.value) {
+    throw out.error ?? new Error("could not generate ics");
+  }
+  return out.value;
 }
