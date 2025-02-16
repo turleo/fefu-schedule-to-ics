@@ -12,7 +12,8 @@
   "scripts": {
     "run": "bun ./src/index.ts",
     "lint": "prettier . --check",
-    "lint-fix": "prettier . --write",
+    "format": "prettier . --write",
+    "typecheck": "tsc --noEmit --project .",
     "generate-mock": "bun ./src/api/mocking/generate.ts"
   },
   "dependencies": {

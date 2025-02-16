@@ -17,7 +17,7 @@ console.log(end);
 const events = await requestEvents(
   start,
   end,
-  6162 // random group id
+  '6162' // random group id
 );
 
 Bun.write(`${import.meta.dir}/events.json`, JSON.stringify(events));
