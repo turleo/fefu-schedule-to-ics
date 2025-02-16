@@ -7,7 +7,8 @@ import { CalendarManager } from "./exports/caldav";
 import { massApiEventToIcs } from "./exports/ics";
 
 const startDate = new Date(2025, 1, 12);
-const endDate = new Date(2025, 1, 26);
+const endDate = new Date(2025, 2, 26);
+
 const dateRanges = datesIntoRanges(startDate, endDate);
 
 const calendarUrls: Record<string, string> = JSON.parse(
@@ -16,11 +17,25 @@ const calendarUrls: Record<string, string> = JSON.parse(
 const calendarAuth: any = JSON.parse(process.env.CALDAV_AUTH ?? "{}");
 const calendarManager = await CalendarManager(calendarAuth, calendarUrls);
 
+const timeout =
+  parseInt(process.env.TIMEOUT_BEFORE_NEXT_REQUEST ?? "10000") ?? 10000;
+let errors = 0;
+
 for (const { start, end } of dateRanges) {
   console.log(
     `Fetching for dates ${start.toDateString()} to ${end.toDateString()}`
   );
-  const apiEvents = await requestEvents(start, end, process.env.GROUP_ID);
+  let apiEvents = undefined;
+  while (!apiEvents) {
+    try {
+      apiEvents = await requestEvents(start, end, process.env.GROUP_ID);
+    } catch (e) {
+      errors += 1;
+      console.error(e);
+      console.log(`Waiting ${timeout * errors}...`);
+      await Bun.sleep(timeout * errors);
+    }
+  }
   console.log(`Got ${apiEvents.length} events`);
 
   const excludedSubjects: string[] = process.env.SUBGROUPS?.split(",") ?? [""];
@@ -41,4 +56,7 @@ for (const { start, end } of dateRanges) {
     await calendarManager.uploadIcs(subgroup, start, ics);
     console.log(`Written`);
   }
+
+  console.log(`Waiting ${timeout}...`);
+  await Bun.sleep(timeout);
 }

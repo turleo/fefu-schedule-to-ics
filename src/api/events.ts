@@ -19,10 +19,28 @@ export async function requestEvents(
     ppsId: ppsId ?? "",
     facilityId: facilityId ?? "0",
   });
-  const r = await fetch(`https://univer.dvfu.ru/schedule/get?${options}`);
-  console.log(`https://univer.dvfu.ru/schedule/get?${options}`);
-  const answer = (await r.json()) as ApiAnswer;
-  const events = answer.events;
+  const r = await fetch(`https://univer.dvfu.ru/schedule/get?${options}`, {
+    headers: {
+      "User-Agent":
+        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:135.0) Gecko/20100101 Firefox/135.0",
+    },
+  });
+  if (r.status !== 200) {
+    console.log(`https://univer.dvfu.ru/schedule/get?${options}`);
+    throw new Error(await r.text());
+  }
 
-  return events;
+  const rawAnswer = await r.text();
+  try {
+    const answer = JSON.parse(rawAnswer) as Partial<ApiAnswer>;
+    if (answer.code == 400) {
+      throw new Error();
+    }
+    const events = answer.events ?? [];
+
+    return events;
+  } catch {
+    console.log(`https://univer.dvfu.ru/schedule/get?${options}`);
+    throw new Error(rawAnswer);
+  }
 }

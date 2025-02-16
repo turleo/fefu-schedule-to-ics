@@ -36,4 +36,10 @@ export interface ApiAnswer {
   groups: string[];
   specializations: Record<string, string>;
   subgroups: Record<string, string>;
+
+  // Following fields shown only on error
+  status?: number;
+  name?: string;
+  message?: string;
+  code?: number;
 }
