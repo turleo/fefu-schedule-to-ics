@@ -21,11 +21,13 @@ const timeout =
   parseInt(process.env.TIMEOUT_BEFORE_NEXT_REQUEST ?? "10000") ?? 10000;
 let errors = 0;
 
-const excludedSubjects: string[] = process.env.EXCLUDED_SUBJECTS?.split(",") ?? [""];
+const excludedSubjects: string[] = process.env.EXCLUDED_SUBJECTS?.split(
+  ","
+) ?? [""];
 
 for (const { start, end } of dateRanges) {
   console.log(
-    `Fetching for dates ${start.toDateString()} to ${end.toDateString()}`
+    `🔽 Fetching for dates ${start.toDateString()} to ${end.toDateString()}`
   );
   let apiEvents = undefined;
   while (!apiEvents) {
@@ -33,8 +35,8 @@ for (const { start, end } of dateRanges) {
       apiEvents = await requestEvents(start, end, process.env.GROUP_ID);
     } catch (e) {
       errors += 1;
-      console.error(e);
-      console.log(`Waiting ${timeout * errors}...`);
+      console.error('❌', e);
+      console.log(`⏰ Waiting ${timeout * errors}...`);
       await Bun.sleep(timeout * errors);
     }
   }
@@ -47,17 +49,17 @@ for (const { start, end } of dateRanges) {
 
   for (const subgroup of subgroups) {
     if (!calendarUrls[subgroup]) {
-      console.log(`Skipping subgroup ${subgroup}`);
+      console.log(`⏭️ Skipping subgroup ${subgroup}`);
       continue;
     }
     const events = groupedEvents.get(subgroup);
     const ics = massApiEventToIcs(events ?? []);
 
-    console.log(`Writing subgroup ${subgroup} to calendar`);
+    console.log(`💾 Writing subgroup ${subgroup} to calendar`);
     await calendarManager.uploadIcs(subgroup, start, ics);
-    console.log(`Written`);
+    console.log(`💾 Written`);
   }
 
-  console.log(`Waiting ${timeout}...`);
+  console.log(`⏰ Waiting ${timeout}...`);
   await Bun.sleep(timeout);
 }

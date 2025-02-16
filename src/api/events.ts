@@ -26,7 +26,7 @@ export async function requestEvents(
     },
   });
   if (r.status !== 200) {
-    console.log(`https://univer.dvfu.ru/schedule/get?${options}`);
+    console.log(`🌏 https://univer.dvfu.ru/schedule/get?${options}`);
     throw new Error(await r.text());
   }
 
@@ -40,7 +40,7 @@ export async function requestEvents(
 
     return events;
   } catch {
-    console.log(`https://univer.dvfu.ru/schedule/get?${options}`);
-    throw new Error(rawAnswer);
+    console.log(`🌏 https://univer.dvfu.ru/schedule/get?${options}`);
+    throw new Error(rawAnswer.slice(0, 100));
   }
 }
