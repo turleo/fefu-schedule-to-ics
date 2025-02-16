@@ -18,7 +18,7 @@ const expectedEvents: EventAttributes[] = [
     start: [2025, 2, 16, 22, 30],
     startInputType: "utc",
     duration: { hours: 1, minutes: 30 },
-    title: "Безумно полезный предмет",
+    title: "Предмет ещё полезнее",
     description: "Б9123-09.03.03пикд, Лекция\nСамый лучший преподователь",
     location: "D123",
     uid: "61aa638a-c20e-4051-9a1f-e44f0014c05d",

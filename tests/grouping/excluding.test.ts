@@ -1,11 +1,13 @@
 import { test, expect } from "bun:test";
-import { groupEvents } from "@/grouping";
 import apiEvents from "../apiEvents.json";
+import { excludeEvents } from "@/grouping/excluding";
 
-test("excluding events by subgroups", () => {
-  const subgroups = ["1", "2", ""];
-  const grouped = groupEvents(apiEvents, "subgroup", subgroups);
-  expect(grouped.get("1")?.length).toBe(2);
-  expect(grouped.get("2")?.length).toBe(1);
-  expect(grouped.get("")?.length).toBe(1);
+test("excluding events with empty values", () => {
+  const excluded = excludeEvents(apiEvents, "pps_load", ["Лекция"]);
+  expect(excluded.length).toBe(0);
+});
+
+test("excluding events without empty values", () => {
+  const excluded = excludeEvents(apiEvents, "title", ["Предмет ещё полезнее"]);
+  expect(excluded.length).toBe(1);
 });

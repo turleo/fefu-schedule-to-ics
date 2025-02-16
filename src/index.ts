@@ -21,6 +21,8 @@ const timeout =
   parseInt(process.env.TIMEOUT_BEFORE_NEXT_REQUEST ?? "10000") ?? 10000;
 let errors = 0;
 
+const excludedSubjects: string[] = process.env.EXCLUDED_SUBJECTS?.split(",") ?? [""];
+
 for (const { start, end } of dateRanges) {
   console.log(
     `Fetching for dates ${start.toDateString()} to ${end.toDateString()}`
@@ -38,7 +40,6 @@ for (const { start, end } of dateRanges) {
   }
   console.log(`Got ${apiEvents.length} events`);
 
-  const excludedSubjects: string[] = process.env.SUBGROUPS?.split(",") ?? [""];
   const filteredEvents = excludeEvents(apiEvents, "title", excludedSubjects);
 
   const subgroups: string[] = process.env.SUBGROUPS?.split(",") ?? [""];
