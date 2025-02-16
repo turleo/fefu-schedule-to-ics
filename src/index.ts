@@ -5,9 +5,11 @@ import { excludeEvents } from "./grouping/excluding";
 import { datesIntoRanges } from "./api/dates";
 import { CalendarManager } from "./exports/caldav";
 import { massApiEventToIcs } from "./exports/ics";
+import { MS_IN_DAY } from "./api/consts";
 
-const startDate = new Date(2025, 1, 12);
-const endDate = new Date(2025, 2, 26);
+const requestForWeeks = parseInt(process.env.REQUEST_FOR_WEEKS ?? "5") ?? 5;
+const startDate = new Date();
+const endDate = new Date(startDate.getTime() + requestForWeeks * 7 * MS_IN_DAY);
 
 const dateRanges = datesIntoRanges(startDate, endDate);
 
@@ -35,7 +37,7 @@ for (const { start, end } of dateRanges) {
       apiEvents = await requestEvents(start, end, process.env.GROUP_ID);
     } catch (e) {
       errors += 1;
-      console.error('❌', e);
+      console.error("❌", e);
       console.log(`⏰ Waiting ${timeout * errors}...`);
       await Bun.sleep(timeout * errors);
     }
