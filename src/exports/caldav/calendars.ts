@@ -1,4 +1,3 @@
-import { createDAVClient } from "tsdav";
 import type { CreatedDAVClient } from "./types";
 
 export async function fetchAndGroupCalendars(

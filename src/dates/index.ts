@@ -1,5 +1,5 @@
-import { MS_IN_DAY } from "../consts";
-import type { DataRange } from "../types";
+import { MS_IN_DAY } from "@/api/consts";
+import type { DataRange } from "@/api/types";
 
 export function datesIntoRanges(start: Date, end: Date) {
   const dates: DataRange[] = [];

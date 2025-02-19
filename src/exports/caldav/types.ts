@@ -1,4 +1,3 @@
-import type { ApiEvent } from "@/api/types";
 import { createDAVClient, type DAVCalendar } from "tsdav";
 
 export type CreatedDAVClient = Awaited<ReturnType<typeof createDAVClient>>;

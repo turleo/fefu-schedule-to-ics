@@ -1,0 +1,9 @@
+groupIds = [ 6162 ]
+excludeSubjects = [ "Военная подготовка" ]
+requestForWeeks = 0
+appAccess = "Basic"
+accessToken = "..."
+refreshToken = "..."
+
+[calendarByGroups]
+  3 = ""

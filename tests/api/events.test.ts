@@ -1,4 +1,4 @@
-import { datesIntoRanges } from "@/api/dates";
+import { datesIntoRanges } from "@/dates";
 import { test, expect } from "bun:test";
 
 test("generate data ranges", () => {

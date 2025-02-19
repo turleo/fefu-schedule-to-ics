@@ -1,3 +1,12 @@
-import { requestEvents } from "./events";
+import type Config from "@/config/types";
+import { requestEvents } from "./fetch";
+import { refreshAccessToken } from "./tokens";
+import type { ApiManager } from "./types";
 
-export { requestEvents };
+export function ApiManager(config: Config): ApiManager {
+  return {
+    config,
+    refreshAccessToken,
+    requestEvents,
+  };
+}
