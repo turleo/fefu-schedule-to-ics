@@ -19,7 +19,10 @@ const endDate = new Date(startDate.getTime() + requestForWeeks * 7 * MS_IN_DAY);
 
 const dateRanges = datesIntoRanges(startDate, endDate);
 
-const calendarManager = await CalendarManager(config.calendarAuth, config.calendarsByGroups);
+const calendarManager = await CalendarManager(
+  config.calendarAuth,
+  config.calendarsByGroups
+);
 const apiManager = ApiManager(config);
 
 for (const { start, end } of dateRanges) {
@@ -28,12 +31,22 @@ for (const { start, end } of dateRanges) {
   );
 
   const apiEvents = await apiManager.requestEvents(start, end, config.groupIds);
-  console.log(`🔽 Fetched ${apiEvents.length} events`)
+  console.log(`🔽 Fetched ${apiEvents.length} events`);
 
-  const filteredEvents = excludeEvents(apiEvents, "discipline", config.excludedSubjects, (a) => a.name);
+  const filteredEvents = excludeEvents(
+    apiEvents,
+    "discipline",
+    config.excludedSubjects,
+    (a) => a.name
+  );
 
   const subgroups: string[] = Object.keys(config.calendarsByGroups);
-  const groupedEvents = groupEvents(filteredEvents, "academicSubgroup", subgroups, (a) => a?.name ?? "");
+  const groupedEvents = groupEvents(
+    filteredEvents,
+    "academicSubgroup",
+    subgroups,
+    (a) => a?.name ?? ""
+  );
 
   for (const subgroup of subgroups) {
     if (!config.calendarsByGroups[subgroup]) {
@@ -41,7 +54,7 @@ for (const { start, end } of dateRanges) {
       continue;
     }
     const events = groupedEvents.get(subgroup);
-    console.log(Object.keys(groupedEvents), subgroups)
+    console.log(Object.keys(groupedEvents), subgroups);
     const ics = massApiEventToIcs(events ?? []);
 
     console.log(`💾 Writing subgroup ${subgroup} to calendar`);

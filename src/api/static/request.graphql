@@ -1,5 +1,5 @@
 query ReadLessons {
-  lessons(start_time: "%s 00:00:00", end_time: "%s 00:00:00", academic_groups: %j) {
+  lessons(start_time: "%s 00:00:00", end_time: "%s 00:00:00") {
     guid
     discipline {
       name

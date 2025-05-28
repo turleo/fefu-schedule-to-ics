@@ -11,11 +11,11 @@ export function groupEvents<T, K extends keyof T>(
   }
 
   for (const event of events) {
-    const localKey = hash(event[key])
+    const localKey = hash(event[key]);
     if (localKey && values.includes(localKey)) {
       groups.get(localKey)?.push(event);
     } else {
-      console.log(localKey, values)
+      console.log(localKey, values);
       for (const subgroup of values) {
         groups.get(subgroup)?.push(event);
       }
