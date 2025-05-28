@@ -2,8 +2,8 @@ import type { ApiEvent } from "@/api/types";
 import { createEvents, type DateTime, type EventAttributes } from "ics";
 
 function apiEventToIcs(event: ApiEvent) {
-  const startDate = new Date(event.start);
-  const endDate = new Date(event.end);
+  const startDate = new Date(event.start_time);
+  const endDate = new Date(event.end_time);
   const durationDate = new Date(endDate.getTime() - startDate.getTime());
   const duration = {
     hours: durationDate.getUTCHours(),
@@ -17,19 +17,19 @@ function apiEventToIcs(event: ApiEvent) {
     startDate.getUTCMinutes(),
   ] as DateTime;
 
-  const group = `${event.group}${event.subgroup ? " (" + event.subgroup + ")" : ""}`;
-  const teacher = `${event.teacher}${event.teacher_degree ? " (" + event.teacher_degree + ")" : ""}`;
-  const type = `${event.pps_load || event.control_type}`;
+  const group = `${event.academicGroup?.name}${event.academicSubgroup ? " (" + event.academicSubgroup.name + ")" : ""}`;
+  const teacher = `${event.teacher.fullName}${event.teacher.academicDegree ? " (" + event.teacher.academicDegree + ")" : ""}`;
+  const type = `${event.ppsLoad?.name || event.academicControl?.name}`;
 
   const attributes: EventAttributes = {
     start,
     startInputType: "utc",
     duration,
-    title: event.title,
+    title: event.discipline.name,
     description: `${group}, ${type}\n${teacher}`,
-    location: event.distanceEducationURL
-      ? event.distanceEducationURL
-      : event.classroom,
+    location: event.distance_education_url
+      ? event.distance_education_url
+      : event.facility?.name,
     uid: event.guid,
   };
   return attributes;

@@ -8,7 +8,7 @@ export async function uploadIcs(
 ) {
   await this.client.createCalendarObject({
     calendar: this.calendars[subgroup],
-    filename: `${startDate.toISOString}@${subgroup}.ics`,
+    filename: `${startDate.toISOString()}@${subgroup}.ics`,
     iCalString: ics,
   });
 }

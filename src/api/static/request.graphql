@@ -1,48 +1,32 @@
 query ReadLessons {
-  __typename
   lessons(start_time: "%s 00:00:00", end_time: "%s 00:00:00", academic_groups: %j) {
-    __typename
-    id
     guid
     discipline {
-      __typename
       name
-      name_en
     }
     start_time
     end_time
     academicGroup {
-      __typename
       name
     }
     facility {
-      __typename
       name
     }
     teacher {
-      __typename
       fullName
       academicDegree {
-        __typename
         name
-        name_en
       }
     }
     academicControl {
-      __typename
       name
-      name_en
     }
     ppsLoad {
-      __typename
       name
-      name_en
     }
     academicSubgroup {
-      __typename
       name
     }
     distance_education_url
-    distance_education_description
   }
 }

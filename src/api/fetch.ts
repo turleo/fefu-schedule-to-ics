@@ -1,4 +1,4 @@
-import type { ApiManager } from "@/api/types";
+import type { ApiEvent, ApiManager } from "@/api/types";
 import util from "node:util";
 
 export async function requestEvents(
@@ -6,7 +6,7 @@ export async function requestEvents(
   start: Date,
   end: Date,
   groupIds: number[]
-) {
+): Promise<ApiEvent[]> {
   await this.refreshAccessToken();
 
   const rawRequest = await Bun.file(
@@ -36,10 +36,7 @@ export async function requestEvents(
   const rawAnswer = await r.text();
   try {
     const answer = JSON.parse(rawAnswer);
-    if (answer.code == 400) {
-      throw new Error();
-    }
-    const events = answer.events ?? [];
+    const events = answer.data.lessons ?? [];
 
     return events;
   } catch {

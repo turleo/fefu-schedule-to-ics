@@ -4,8 +4,8 @@ import apiEvents from "../apiEvents.json";
 
 test("group events by subgroups", () => {
   const subgroups = ["1", "2", ""];
-  const grouped = groupEvents(apiEvents, "subgroup", subgroups);
+  const grouped = groupEvents(apiEvents, "academicSubgroup", subgroups, (a) => a?.name ?? '');
   expect(grouped.get("1")?.length).toBe(2);
-  expect(grouped.get("2")?.length).toBe(1);
+  expect(grouped.get("2")?.length).toBe(2);
   expect(grouped.get("")?.length).toBe(1);
 });

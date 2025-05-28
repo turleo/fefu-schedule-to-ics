@@ -1,56 +1,78 @@
 [
-  {
-    "id": 1,
-    "guid": "61aa638a-c20e-4051-9a1f-e44f0014c05d",
-    "team_guid": "de73092d-cdb4-47e1-aeba-76743fa1f368",
-    "title": "Безумно полезный предмет",
-    "start": "2025-02-17T08:30:00+10:00",
-    "end": "2025-02-17T10:00:00+10:00",
-    "academicGroupId": 2,
-    "academicGroupGuid": "f4b026c3-3175-44a0-949d-4a71effc7d18",
-    "classroom": "D123",
-    "control_type": "Экзамен",
-    "disciplineId": 2,
-    "distanceEducationDescription": "",
-    "distanceEducationURL": "https://github.com/turleo/fefu-schedule-to-ics",
-    "group": "Б9123-09.03.03пикд",
-    "group_id": 6162,
-    "order": 4,
-    "pps_load": "",
-    "specialization": "Прикладная информатика в компьютерном дизайне",
-    "specialization_id": 64,
-    "students_number": 108,
-    "subgroup": "1",
-    "subgroup_id": null,
-    "teacher": "Самый лучший преподователь",
-    "teacher_degree": "Прям очень лучший преподователь",
-    "userId": 0
+    {
+    "guid": "F81E2C10-B18F-4680-BEED-6F721F09D486",
+    "discipline": {
+      "name": "Безумно полезный предмет"
+    },
+    "start_time": "2025-02-17T08:30:00+10:00",
+    "end_time": "2025-02-17T10:00:00+10:00",
+    "academicGroup": {
+      "name": "Самая лучшая группа"
+    },
+    "facility": {
+      "name": "D123"
+    },
+    "teacher": {
+      "fullName": "Самый лучший преподователь",
+      "academicDegree": "Прям очень лучший преподователь"
+    },
+    "academicControl": {
+      "name": "Экзамен"
+    },
+    "ppsLoad": null,
+    "academicSubgroup": {
+      "name": "1"
+    },
+    "distance_education_url": "https://github.com/turleo/fefu-schedule-to-ics"
   },
   {
-    "id": 2,
-    "guid": "61aa638a-c20e-4051-9a1f-e44f0014c05d",
-    "team_guid": "de73092d-cdb4-47e1-aeba-76743fa1f368",
-    "title": "Предмет ещё полезнее",
-    "start": "2025-02-17T08:30:00+10:00",
-    "end": "2025-02-17T10:00:00+10:00",
-    "academicGroupId": 2,
-    "academicGroupGuid": "f4b026c3-3175-44a0-949d-4a71effc7d18",
-    "classroom": "D123",
-    "control_type": "",
-    "disciplineId": 2,
-    "distanceEducationDescription": "",
-    "distanceEducationURL": null,
-    "group": "Б9123-09.03.03пикд",
-    "group_id": 6162,
-    "order": 4,
-    "pps_load": "Лекция",
-    "specialization": "Прикладная информатика в компьютерном дизайне",
-    "specialization_id": 64,
-    "students_number": 108,
-    "subgroup": "",
-    "subgroup_id": null,
-    "teacher": "Самый лучший преподователь",
-    "teacher_degree": "",
-    "userId": 0
+    "guid": "B79E9BF8-F14D-45AB-98FA-5F5731C3E090",
+    "discipline": {
+      "name": "Безумно полезный предмет"
+    },
+    "start_time": "2025-02-17T08:30:00+10:00",
+    "end_time": "2025-02-17T10:00:00+10:00",
+    "academicGroup": {
+      "name": "Самая лучшая группа"
+    },
+    "facility": {
+      "name": "D123"
+    },
+    "teacher": {
+      "fullName": "Самый лучший преподователь",
+      "academicDegree": "Прям очень лучший преподователь"
+    },
+    "academicControl": {
+      "name": "Экзамен"
+    },
+    "ppsLoad": null,
+    "academicSubgroup": {
+      "name": "2"
+    },
+    "distance_education_url": "https://github.com/turleo/fefu-schedule-to-ics"
+  },
+  {
+    "guid": "33A1B51F-44A3-4186-BF9D-216F33554AB6",
+    "discipline": {
+      "name": "Предмет ещё полезнее"
+    },
+    "start_time": "2025-02-17T08:30:00+10:00",
+    "end_time": "2025-02-17T10:00:00+10:00",
+    "academicGroup": {
+      "name": "Самая лучшая группа"
+    },
+    "facility": {
+      "name": "D123"
+    },
+    "teacher": {
+      "fullName": "Самый лучший преподователь",
+      "academicDegree": null
+    },
+    "academicControl": null,
+    "ppsLoad": {
+      "name": "Лекция"
+    },
+    "academicSubgroup": null,
+    "distance_education_url": ""
   }
 ]

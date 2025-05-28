@@ -6,19 +6,32 @@ export interface DataRange {
 }
 
 export interface ApiEvent {
-  id: number;
   guid: string;
-  title: string;
-  start: string;
-  end: string;
-  classroom: string;
-  control_type: string;
-  distanceEducationURL: any;
-  group: string;
-  pps_load: string;
-  subgroup: string;
-  teacher: string;
-  teacher_degree: string;
+  discipline: {
+    name: string;
+  };
+  start_time: string;
+  end_time: string;
+  academicGroup: {
+    name: string;
+  } | null;
+  facility: {
+    name: string;
+  } | null;
+  teacher: {
+    fullName: string;
+    academicDegree: string | null;
+  };
+  academicControl: {
+    name: string;
+  } | null;
+  ppsLoad: {
+    name: string;
+  } | null;
+  academicSubgroup: {
+    name: string;
+  } | null;
+  distance_education_url: string | null;
 }
 
 export interface ApiManager {
@@ -29,5 +42,5 @@ export interface ApiManager {
     start: Date,
     end: Date,
     groups: number[]
-  ) => Promise<void>;
+  ) => Promise<ApiEvent[]>;
 }
