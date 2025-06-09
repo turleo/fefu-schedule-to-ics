@@ -35,3 +35,32 @@ export async function refreshAccessToken(this: ApiManager) {
   this.config.accessToken = json.access_token;
   this.config.refreshToken = json.refresh_token;
 }
+
+export async function createAccessToken(
+  this: ApiManager,
+  username: string,
+  password: string
+) {
+  const r = await fetch("https://esa.dvfu.ru/oauth/token/create/", {
+    method: "POST",
+    headers: {
+      "User-Agent": "Dart/3.4 (dart:io)",
+      "content-type": "application/json",
+      "Accept-Language": "ru-RU",
+      Accept: "*/*",
+      Authorization: this.config.appAccess,
+    },
+    body: JSON.stringify({
+      grant_type: "password",
+      username,
+      password,
+    }),
+  });
+
+  if (r.status !== 200) {
+    throw new Error(await r.text());
+  }
+  const json = await r.json();
+  this.config.accessToken = json.access_token;
+  this.config.refreshToken = json.refresh_token;
+}

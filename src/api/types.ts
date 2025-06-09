@@ -36,6 +36,11 @@ export interface ApiEvent {
 
 export interface ApiManager {
   config: Config;
+  createAccessToken: (
+    this: ApiManager,
+    username: string,
+    password: string
+  ) => Promise<void>;
   refreshAccessToken: () => Promise<void>;
   requestEvents: (
     this: ApiManager,

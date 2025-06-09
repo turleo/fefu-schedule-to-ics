@@ -9,9 +9,28 @@ import { excludeEvents } from "./grouping/excluding";
 import { groupEvents } from "./grouping";
 import { CalendarManager } from "./exports/caldav";
 import { massApiEventToIcs } from "./exports/ics";
+import { parseArgs } from "util";
+import { exit } from "node:process";
 
 const rawConfig = await Bun.file("./config.toml").text();
 const config = TOML.parse(rawConfig) as Config;
+
+const { values, positionals } = parseArgs({
+  args: Bun.argv,
+  options: {
+    mode: {
+      type: "string",
+    },
+    username: {
+      type: "string",
+    },
+    password: {
+      type: "string",
+    },
+  },
+  strict: true,
+  allowPositionals: true,
+});
 
 const requestForWeeks = config.requestForWeeks;
 const startDate = new Date();
@@ -24,6 +43,21 @@ const calendarManager = await CalendarManager(
   config.calendarsByGroups
 );
 const apiManager = ApiManager(config);
+
+if (values["mode"] == "login") {
+  if (!values["username"] || !values["password"]) {
+    console.error("Specify --username and --password");
+    exit();
+  }
+  await apiManager.createAccessToken(values["username"], values["password"]);
+  console.log("✅ Credentials fetched");
+  config.accessToken = apiManager.config.accessToken;
+  config.refreshToken = apiManager.config.refreshToken;
+  const file = await Bun.file("./config.toml");
+  await file.write(TOML.stringify(config));
+  console.log("💾 Credentials saved");
+  exit();
+}
 
 for (const { start, end } of dateRanges) {
   console.log(
