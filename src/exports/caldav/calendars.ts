@@ -4,15 +4,15 @@ export async function fetchAndGroupCalendars(
   client: CreatedDAVClient,
   calendarUrls: Record<string, string>
 ) {
-  const calendars = (await client.fetchCalendars())
-    .map((calendar) => {
-      for (const subgroup in calendarUrls) {
-        if (calendarUrls[subgroup] == calendar.url.toLowerCase()) {
-          return [subgroup, calendar];
-        }
+  const calendars = await client.fetchCalendars();
+  const out = [];
+  for (const subgroup in calendarUrls) {
+    for (const calendar of calendars) {
+      if (calendarUrls[subgroup] == calendar.url.toLowerCase()) {
+        out.push([subgroup, calendar]);
       }
-    })
-    .filter((calendar) => !!calendar);
+    }
+  }
 
-  return Object.fromEntries(calendars);
+  return Object.fromEntries(out);
 }
