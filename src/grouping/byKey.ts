@@ -15,9 +15,7 @@ export function groupEvents<T, K extends keyof T>(
     if (localKey && values.includes(localKey)) {
       groups.get(localKey)?.push(event);
     } else {
-      for (const subgroup of values) {
-        groups.get(subgroup)?.push(event);
-      }
+      groups.get("default")?.push(event);
     }
   }
 
