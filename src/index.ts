@@ -15,22 +15,36 @@ import { exit } from "node:process";
 const rawConfig = await Bun.file("./config.toml").text();
 const config = TOML.parse(rawConfig) as Config;
 
-const { values, positionals } = parseArgs({
+const { values } = parseArgs({
   args: Bun.argv,
   options: {
-    mode: {
-      type: "string",
-    },
     username: {
       type: "string",
     },
     password: {
       type: "string",
     },
+    help: {
+      type: "boolean",
+    },
   },
   strict: true,
   allowPositionals: true,
 });
+
+if (values["help"]) {
+  console.log(
+    "FEFU to ICS stealer \n\
+\n\
+Usage: run [...args] \n\
+\n\
+  --username [username] - univer.dvfu.ru password \n\
+  --password [password] - univer.dvfu.ru password\
+\n\
+if no arguments specified, refresh token from config.toml will be used \n"
+  );
+  exit();
+}
 
 const requestForWeeks = config.requestForWeeks;
 const startDate = new Date();
@@ -44,19 +58,25 @@ const calendarManager = await CalendarManager(
 );
 const apiManager = ApiManager(config);
 
-if (values["mode"] == "login") {
-  if (!values["username"] || !values["password"]) {
-    console.error("Specify --username and --password");
-    exit();
+if (values["username"]) {
+  let password = values["password"];
+  if (!password) {
+    console.log("Specify password:");
+    for await (const line of console) {
+      password = line;
+      if (password) {
+        break;
+      }
+    }
   }
-  await apiManager.createAccessToken(values["username"], values["password"]);
+
+  await apiManager.createAccessToken(values["username"], password!);
   console.log("✅ Credentials fetched");
   config.accessToken = apiManager.config.accessToken;
   config.refreshToken = apiManager.config.refreshToken;
   const file = await Bun.file("./config.toml");
   await file.write(TOML.stringify(config));
   console.log("💾 Credentials saved");
-  exit();
 }
 
 for (const { start, end } of dateRanges) {
@@ -88,7 +108,6 @@ for (const { start, end } of dateRanges) {
       continue;
     }
     const events = groupedEvents.get(subgroup);
-    console.log(Object.keys(groupedEvents), subgroups);
     const ics = massApiEventToIcs(events ?? []);
 
     console.log(`💾 Writing subgroup ${subgroup} to calendar`);
