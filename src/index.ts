@@ -12,9 +12,6 @@ import { massApiEventToIcs } from "./exports/ics";
 import { parseArgs } from "util";
 import { exit } from "node:process";
 
-const rawConfig = await Bun.file("./config.toml").text();
-const config = TOML.parse(rawConfig) as Config;
-
 const { values } = parseArgs({
   args: Bun.argv,
   options: {
@@ -22,6 +19,9 @@ const { values } = parseArgs({
       type: "string",
     },
     password: {
+      type: "string",
+    },
+    config: {
       type: "string",
     },
     help: {
@@ -40,11 +40,15 @@ Usage: run [...args] \n\
 \n\
   --username [username] - univer.dvfu.ru password \n\
   --password [password] - univer.dvfu.ru password\
+  --config [./config.toml] - path to config\
 \n\
-if no arguments specified, refresh token from config.toml will be used \n"
+if no arguments specified, refresh token from ./config.toml will be used \n"
   );
   exit();
 }
+
+const rawConfig = await Bun.file(values.config ?? "./config.toml").text();
+const config = TOML.parse(rawConfig) as Config;
 
 const requestForWeeks = config.requestForWeeks;
 const startDate = new Date();
