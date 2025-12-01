@@ -3,7 +3,6 @@ import { datesIntoRanges } from "./dates";
 import { MS_IN_DAY } from "./api/consts";
 import { type ApiEvent } from "./api/types";
 
-import TOML from "smol-toml";
 import type Config from "./config/types";
 import { excludeEvents } from "./grouping/excluding";
 import { groupEvents } from "./grouping";
@@ -11,6 +10,8 @@ import { CalendarManager } from "./exports/caldav";
 import { massApiEventToIcs } from "./exports/ics";
 import { parseArgs } from "util";
 import { exit } from "node:process";
+import path from "node:path";
+import { stringify } from "smol-toml";
 
 const { values } = parseArgs({
   args: Bun.argv,
@@ -47,8 +48,8 @@ if no arguments specified, refresh token from ./config.toml will be used \n"
   exit();
 }
 
-const rawConfig = await Bun.file(values.config ?? "./config.toml").text();
-const config = TOML.parse(rawConfig) as Config;
+const configPath = path.resolve(process.cwd(), values.config ?? "config.toml");
+const config: Config = await import(configPath);
 
 const apiManager = ApiManager(config);
 
@@ -70,9 +71,6 @@ if (values["username"]) {
   config.refreshToken = apiManager.config.refreshToken;
   config.username = values["username"];
   config.password = password!;
-  const file = await Bun.file("./config.toml");
-  await file.write(TOML.stringify(config));
-  console.log("💾 Credentials saved");
 }
 
 const requestForWeeks = config.requestForWeeks;
@@ -123,3 +121,7 @@ for (const { start, end } of dateRanges) {
     console.log(`💾 Written`);
   }
 }
+
+const file = await Bun.file(configPath);
+await file.write(stringify(config));
+console.log("💾 Credentials saved");
