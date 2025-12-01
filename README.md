@@ -1,28 +1,45 @@
 # 🗓️ FEFU schedule to .ics files
 
-This project's goal is tacking schedule from univer.dvfu.ru once a week, generating proper .ics file and putting it into S3 (probably).
+This project's goal is fetching the schedule from univer.dvfu.ru and putting the schedule into CalDav compatible calendar.
 
-To install dependencies:
+## ⚡️ Prerequisites
+
+- [Bun](https://bun.sh/) (Runtime)
+
+## ⬇️ Installation
 
 ```bash
-bun install
+bun install --frozen-lockfile --production
 ```
 
-To run:
+## Configuration
+
+Example configuration is located at [config.example.toml](./config.example.toml).
+
+You should specify
+
+- `groupIds` – you can get it from requests in devtools in [Univer](https://univer.dvfu.ru/schedule)
+- `appAccess` – can be taken found in mobile app, good luck
+- `requestForWeeks` – how many weeks do you want to update every run
+- `calendarAuth` – authorization for CalDav calendar shaped like [this type](https://github.com/natelindev/tsdav/blob/master/src/client.ts#L54)
+- `calendarByGroups` – list of subgroups and calendars for them. `default` group for everything without and subgroup assigned (eg. lectures)
+
+After that you should run
 
 ```bash
-bun run run
+bun run run --username [your univer.dvfu.ru email before @]
 ```
 
-## Mocking
+Script will update calendars for first time and save credentials.
 
-In order not to anger FEFU IT team, mock files should be used instead of fetch.
-Currently there are:
+## ⏳️ Running
 
-- `src/api/mocking/events.json`: example of object, returned by `requestEvents` function. Can be disabled by setting `REQUEST_EVENTS` environment variable.
+```
+Usage: run [...args]
 
-To generate all mock data run
+  --username [username] - univer.dvfu.ru password
+  --password [password] - univer.dvfu.ru password
+  --config [./config.toml] - path to config
 
-```bash
-bun run generate-mock
+if no arguments specified, refresh token from ./config.toml will be used
 ```

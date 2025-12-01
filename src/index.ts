@@ -35,13 +35,13 @@ const { values } = parseArgs({
 
 if (values["help"]) {
   console.log(
-    "FEFU to ICS stealer \n\
+    "🗓️ FEFU to ICS stealer \n\
 \n\
 Usage: run [...args] \n\
 \n\
   --username [username] - univer.dvfu.ru password \n\
-  --password [password] - univer.dvfu.ru password\
-  --config [./config.toml] - path to config\
+  --password [password] - univer.dvfu.ru password\n\
+  --config [./config.toml] - path to config\n\
 \n\
 if no arguments specified, refresh token from ./config.toml will be used \n"
   );
