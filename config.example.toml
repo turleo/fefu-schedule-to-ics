@@ -4,6 +4,8 @@ requestForWeeks = 0
 appAccess = "Basic"
 accessToken = "..."
 refreshToken = "..."
+username = "...@dvfu.ru"
+password = "..."
 
 [calendarByGroups]
   3 = ""

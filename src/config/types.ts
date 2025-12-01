@@ -9,5 +9,7 @@ export default interface Config extends Record<string, any> {
 
   refreshToken: string;
   accessToken: string;
+  username: string;
+  password: string;
   appAccess: string;
 }

@@ -1,7 +1,7 @@
-// TODO
 import { ApiManager } from "./api";
 import { datesIntoRanges } from "./dates";
 import { MS_IN_DAY } from "./api/consts";
+import { type ApiEvent } from "./api/types";
 
 import TOML from "smol-toml";
 import type Config from "./config/types";
@@ -78,6 +78,8 @@ if (values["username"]) {
   console.log("✅ Credentials fetched");
   config.accessToken = apiManager.config.accessToken;
   config.refreshToken = apiManager.config.refreshToken;
+  config.username = values["username"];
+  config.password = password!;
   const file = await Bun.file("./config.toml");
   await file.write(TOML.stringify(config));
   console.log("💾 Credentials saved");
@@ -88,7 +90,12 @@ for (const { start, end } of dateRanges) {
     `🔽 Fetching for dates ${start.toDateString()} to ${end.toDateString()}`
   );
 
-  const apiEvents = await apiManager.requestEvents(start, end, config.groupIds);
+  let apiEvents: ApiEvent[] = [];
+  try {
+    apiEvents = await apiManager.requestEvents(start, end, config.groupIds);
+  } catch {
+    await apiManager.createAccessToken(config.username, config.password);
+  }
   console.log(`🔽 Fetched ${apiEvents.length} events`);
 
   const filteredEvents = excludeEvents(
