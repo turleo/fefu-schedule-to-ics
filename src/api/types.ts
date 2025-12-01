@@ -49,3 +49,21 @@ export interface ApiManager {
     groups: number[]
   ) => Promise<ApiEvent[]>;
 }
+
+export class AuthError extends Error {
+  constructor(msg: string) {
+    super(msg);
+  }
+}
+
+export class RefreshTokenError extends AuthError {
+  constructor(msg: string) {
+    super(msg);
+  }
+}
+
+export class FromCredentialsError extends AuthError {
+  constructor(msg: string) {
+    super(msg);
+  }
+}

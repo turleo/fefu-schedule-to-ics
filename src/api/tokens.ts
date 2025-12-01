@@ -1,4 +1,8 @@
-import type { ApiManager } from "./types";
+import {
+  FromCredentialsError,
+  RefreshTokenError,
+  type ApiManager,
+} from "./types";
 
 function isJwtExpired(jwt: string) {
   const payloadB64 = jwt.split(".")[1];
@@ -29,7 +33,7 @@ export async function refreshAccessToken(this: ApiManager) {
   });
 
   if (r.status !== 200) {
-    throw new Error(await r.text());
+    throw new RefreshTokenError(await r.text());
   }
   const json = await r.json();
   this.config.accessToken = json.access_token;
@@ -58,7 +62,7 @@ export async function createAccessToken(
   });
 
   if (r.status !== 200) {
-    throw new Error(await r.text());
+    throw new FromCredentialsError(await r.text());
   }
   const json = await r.json();
   this.config.accessToken = json.access_token;

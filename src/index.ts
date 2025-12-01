@@ -50,16 +50,6 @@ if no arguments specified, refresh token from ./config.toml will be used \n"
 const rawConfig = await Bun.file(values.config ?? "./config.toml").text();
 const config = TOML.parse(rawConfig) as Config;
 
-const requestForWeeks = config.requestForWeeks;
-const startDate = new Date();
-const endDate = new Date(startDate.getTime() + requestForWeeks * 7 * MS_IN_DAY);
-
-const dateRanges = datesIntoRanges(startDate, endDate);
-
-const calendarManager = await CalendarManager(
-  config.calendarAuth,
-  config.calendarsByGroups
-);
 const apiManager = ApiManager(config);
 
 if (values["username"]) {
@@ -85,17 +75,24 @@ if (values["username"]) {
   console.log("💾 Credentials saved");
 }
 
+const requestForWeeks = config.requestForWeeks;
+const startDate = new Date();
+const endDate = new Date(startDate.getTime() + requestForWeeks * 7 * MS_IN_DAY);
+
+const dateRanges = datesIntoRanges(startDate, endDate);
+
+const calendarManager = await CalendarManager(
+  config.calendarAuth,
+  config.calendarsByGroups
+);
+
 for (const { start, end } of dateRanges) {
   console.log(
     `🔽 Fetching for dates ${start.toDateString()} to ${end.toDateString()}`
   );
 
   let apiEvents: ApiEvent[] = [];
-  try {
-    apiEvents = await apiManager.requestEvents(start, end, config.groupIds);
-  } catch {
-    await apiManager.createAccessToken(config.username, config.password);
-  }
+  apiEvents = await apiManager.requestEvents(start, end, config.groupIds);
   console.log(`🔽 Fetched ${apiEvents.length} events`);
 
   const filteredEvents = excludeEvents(

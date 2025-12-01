@@ -7,8 +7,6 @@ export async function requestEvents(
   end: Date,
   groupIds: number[]
 ): Promise<ApiEvent[]> {
-  await this.refreshAccessToken();
-
   const rawRequest = await Bun.file(
     `${import.meta.dir}/static/request.graphql`
   ).text();
