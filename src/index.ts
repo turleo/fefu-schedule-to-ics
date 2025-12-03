@@ -57,7 +57,7 @@ async function main() {
   const rawConfig = Bun.file(configPath);
   const config = TOML.parse(await rawConfig.text()) as Config;
 
-  const apiManager = ApiManager(config);
+  const apiManager = await ApiManager(config);
 
   if (values["username"]) {
     let password = values["password"];

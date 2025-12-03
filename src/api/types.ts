@@ -51,19 +51,19 @@ export interface ApiManager {
 }
 
 export class AuthError extends Error {
-  constructor(msg: string) {
-    super(msg);
+  constructor(msg: string, options: ErrorOptions | undefined) {
+    super(msg, options);
   }
 }
 
 export class RefreshTokenError extends AuthError {
-  constructor(msg: string) {
-    super(msg);
+  constructor(msg: string, options: ErrorOptions) {
+    super(msg, options);
   }
 }
 
 export class FromCredentialsError extends AuthError {
   constructor(msg: string) {
-    super(msg);
+    super(msg, undefined);
   }
 }

@@ -33,7 +33,9 @@ export async function refreshAccessToken(this: ApiManager) {
   });
 
   if (r.status !== 200) {
-    throw new RefreshTokenError(await r.text());
+    const status = r.statusText;
+    const options = await r.json();
+    throw new RefreshTokenError(status, options);
   }
   const json = await r.json();
   this.config.accessToken = json.access_token;

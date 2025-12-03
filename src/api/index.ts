@@ -3,7 +3,7 @@ import { requestEvents } from "./fetch";
 import { createAccessToken, refreshAccessToken } from "./tokens";
 import { RefreshTokenError, type ApiManager } from "./types";
 
-export function ApiManager(config: Config): ApiManager {
+export async function ApiManager(config: Config): Promise<ApiManager> {
   const manager = {
     config,
     createAccessToken,
@@ -11,10 +11,10 @@ export function ApiManager(config: Config): ApiManager {
     requestEvents,
   };
   try {
-    manager.refreshAccessToken();
+    await manager.refreshAccessToken();
   } catch (e) {
     if (e instanceof RefreshTokenError) {
-      manager.createAccessToken(config.username, config.password);
+      await manager.createAccessToken(config.username, config.password);
     } else {
       throw e;
     }
