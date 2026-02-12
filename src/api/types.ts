@@ -18,7 +18,7 @@ export interface ApiEvent {
   facility: {
     name: string;
   } | null;
-  teacher: {
+  teacher?: {
     fullName: string;
     academicDegree: string | null;
   };
