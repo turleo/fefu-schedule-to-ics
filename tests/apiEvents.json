@@ -14,7 +14,9 @@
     },
     "teacher": {
       "fullName": "Самый лучший преподователь",
-      "academicDegree": "Прям очень лучший преподователь"
+      "academicDegree": {
+        "name": "Прям очень лучший преподователь" 
+      }
     },
     "academicControl": {
       "name": "Экзамен"
@@ -40,7 +42,9 @@
     },
     "teacher": {
       "fullName": "Самый лучший преподователь",
-      "academicDegree": "Прям очень лучший преподователь"
+      "academicDegree": {
+        "name": "Прям очень лучший преподователь"
+      }
     },
     "academicControl": {
       "name": "Экзамен"

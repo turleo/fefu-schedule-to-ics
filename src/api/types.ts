@@ -20,7 +20,7 @@ export interface ApiEvent {
   } | null;
   teacher?: {
     fullName: string;
-    academicDegree: string | null;
+    academicDegree: { name: string } | null;
   };
   academicControl: {
     name: string;

@@ -18,7 +18,7 @@ function apiEventToIcs(event: ApiEvent) {
   ] as DateTime;
 
   const group = `${event.academicGroup?.name}${event.academicSubgroup ? " (" + event.academicSubgroup.name + ")" : ""}`;
-  const teacher = `${event.teacher?.fullName}${event.teacher?.academicDegree ? " (" + event.teacher.academicDegree + ")" : ""}`;
+  const teacher = `${event.teacher?.fullName}${event.teacher?.academicDegree ? " (" + event.teacher.academicDegree.name + ")" : ""}`;
   const type = `${event.ppsLoad?.name || event.academicControl?.name}`;
 
   const attributes: EventAttributes = {
